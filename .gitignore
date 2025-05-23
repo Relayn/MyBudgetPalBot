@@ -31,3 +31,4 @@ tests/__pycache__/ # Игнорируем кэш тестов
 .env
 /.idea
 user.db
+*.log
