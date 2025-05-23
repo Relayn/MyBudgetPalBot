@@ -32,3 +32,4 @@ tests/__pycache__/ # Игнорируем кэш тестов
 /.idea
 user.db
 *.log
+bot.log
