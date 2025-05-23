@@ -1,0 +1,33 @@
+# .gitignore
+
+# Python
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.Python
+env/
+venv/
+.venv/
+# distribution
+.eggs/
+*.egg-info/
+dist/
+build/
+# IDE
+.idea/          # PyCharm
+.vscode/        # VS Code
+*.iml           # PyCharm module files
+# Database
+*.db            # Игнорируем все файлы SQLite баз данных, включая user.db
+# Logs
+*.log           # Игнорируем файл логов
+*.log.*         # Игнорируем ротированные файлы логов
+# Environment variables and sensitive data
+.env            # Игнорируем файл с переменными окружения
+# Tests
+tests/__pycache__/ # Игнорируем кэш тестов
+.pytest_cache/     # Игнорируем кэш pytest
+.env
+/.idea
+user.db
