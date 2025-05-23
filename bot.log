@@ -1,0 +1,275 @@
+2025-05-23 12:40:13,204 - root - INFO - Подключение к базе данных: user.db
+2025-05-23 12:40:13,220 - root - INFO - База данных успешно инициализирована.
+2025-05-23 12:40:13,220 - root - INFO - Бот запущен. Начинаю опрос...
+2025-05-23 12:40:13,221 - aiogram.dispatcher - INFO - Start polling
+2025-05-23 12:40:16,437 - aiogram.dispatcher - INFO - Run polling for bot @MyBudgetPalBot id=7770647171 - 'MyBudgetPalBot'
+2025-05-23 12:40:18,662 - root - INFO - Получена команда /start от пользователя 710168190
+2025-05-23 12:40:19,185 - aiogram.event - INFO - Update id=856655261 is handled. Duration 524 ms by bot id=7770647171
+2025-05-23 12:40:27,064 - root - INFO - Пользователь 710168190 запросил советы по экономии.
+2025-05-23 12:40:27,213 - root - INFO - Совет отправлен пользователю 710168190.
+2025-05-23 12:40:27,214 - aiogram.event - INFO - Update id=856655262 is handled. Duration 151 ms by bot id=7770647171
+2025-05-23 12:40:33,878 - root - INFO - Получено неизвестное сообщение от пользователя 710168190: '5000'
+2025-05-23 12:40:34,023 - aiogram.event - INFO - Update id=856655263 is handled. Duration 151 ms by bot id=7770647171
+2025-05-23 12:40:39,584 - root - INFO - Пользователь 710168190 запросил курс валют.
+2025-05-23 12:40:40,380 - root - INFO - Курсы валют успешно отправлены пользователю 710168190.
+2025-05-23 12:40:40,382 - aiogram.event - INFO - Update id=856655264 is handled. Duration 799 ms by bot id=7770647171
+2025-05-23 12:40:44,377 - root - INFO - Пользователь 710168190 пытается зарегистрироваться.
+2025-05-23 12:40:44,381 - root - ERROR - Ошибка при регистрации пользователя 710168190: 'coroutine' object does not support the asynchronous context manager protocol
+Traceback (most recent call last):
+  File "C:\Users\Alex\Documents\GitHub\MyBudgetPalBot\handlers\registration.py", line 27, in registration
+    async with get_db_connection() as conn:
+               ~~~~~~~~~~~~~~~~~^^
+TypeError: 'coroutine' object does not support the asynchronous context manager protocol
+2025-05-23 12:40:44,575 - aiogram.event - INFO - Update id=856655265 is handled. Duration 199 ms by bot id=7770647171
+2025-05-23 12:40:47,085 - root - INFO - Пользователь 710168190 начал ввод личных финансов.
+2025-05-23 12:40:47,229 - aiogram.event - INFO - Update id=856655266 is handled. Duration 145 ms by bot id=7770647171
+2025-05-23 12:43:27,743 - root - INFO - Получена команда /start от пользователя 710168190
+2025-05-23 12:43:27,889 - aiogram.event - INFO - Update id=856655267 is handled. Duration 146 ms by bot id=7770647171
+2025-05-23 12:43:32,020 - root - INFO - Пользователь 710168190 пытается зарегистрироваться.
+2025-05-23 12:43:32,020 - root - ERROR - Ошибка при регистрации пользователя 710168190: 'coroutine' object does not support the asynchronous context manager protocol
+Traceback (most recent call last):
+  File "C:\Users\Alex\Documents\GitHub\MyBudgetPalBot\handlers\registration.py", line 27, in registration
+    async with conn.cursor() as cursor:
+           ^^^^^^^^^^^^^^^^^^^
+TypeError: 'coroutine' object does not support the asynchronous context manager protocol
+2025-05-23 12:43:32,224 - aiogram.event - INFO - Update id=856655268 is handled. Duration 204 ms by bot id=7770647171
+2025-05-23 12:43:48,263 - root - INFO - Подключение к базе данных: user.db
+2025-05-23 12:43:48,264 - root - INFO - База данных успешно инициализирована.
+2025-05-23 12:43:48,264 - root - INFO - Бот запущен. Начинаю опрос...
+2025-05-23 12:43:48,265 - aiogram.dispatcher - INFO - Start polling
+2025-05-23 12:43:48,741 - aiogram.dispatcher - INFO - Run polling for bot @MyBudgetPalBot id=7770647171 - 'MyBudgetPalBot'
+2025-05-23 12:43:54,376 - root - INFO - Пользователь 710168190 пытается зарегистрироваться.
+2025-05-23 12:43:54,378 - root - ERROR - Ошибка при регистрации пользователя 710168190: threads can only be started once
+Traceback (most recent call last):
+  File "C:\Users\Alex\Documents\GitHub\MyBudgetPalBot\handlers\registration.py", line 26, in registration
+    async with await get_db_connection() as conn:
+               ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Alex\Documents\GitHub\MyBudgetPalBot\.venv\Lib\site-packages\aiosqlite\core.py", line 143, in __aenter__
+    return await self
+           ^^^^^^^^^^
+  File "C:\Users\Alex\Documents\GitHub\MyBudgetPalBot\.venv\Lib\site-packages\aiosqlite\core.py", line 139, in __await__
+    self.start()
+    ~~~~~~~~~~^^
+  File "C:\Users\Alex\AppData\Local\Programs\Python\Python313\Lib\threading.py", line 967, in start
+    raise RuntimeError("threads can only be started once")
+RuntimeError: threads can only be started once
+2025-05-23 12:43:54,799 - aiogram.event - INFO - Update id=856655269 is handled. Duration 423 ms by bot id=7770647171
+2025-05-23 12:44:16,159 - root - INFO - Пользователь 710168190 попытался отменить, но не было активного диалога.
+2025-05-23 12:44:16,160 - aiogram.event - INFO - Update id=856655270 is handled. Duration 149 ms by bot id=7770647171
+2025-05-23 12:44:20,735 - root - INFO - Пользователь 710168190 запросил курс валют.
+2025-05-23 12:44:21,326 - root - INFO - Курсы валют успешно отправлены пользователю 710168190.
+2025-05-23 12:44:21,327 - aiogram.event - INFO - Update id=856655271 is handled. Duration 593 ms by bot id=7770647171
+2025-05-23 12:44:22,835 - root - INFO - Пользователь 710168190 запросил советы по экономии.
+2025-05-23 12:44:22,997 - root - INFO - Совет отправлен пользователю 710168190.
+2025-05-23 12:44:22,997 - aiogram.event - INFO - Update id=856655272 is handled. Duration 163 ms by bot id=7770647171
+2025-05-23 12:44:28,836 - root - INFO - Пользователь 710168190 начал ввод личных финансов.
+2025-05-23 12:44:28,979 - aiogram.event - INFO - Update id=856655273 is handled. Duration 144 ms by bot id=7770647171
+2025-05-23 12:44:53,678 - root - INFO - Подключение к базе данных: user.db
+2025-05-23 12:44:53,682 - root - INFO - База данных успешно инициализирована.
+2025-05-23 12:44:53,682 - root - INFO - Бот запущен. Начинаю опрос...
+2025-05-23 12:44:53,683 - aiogram.dispatcher - INFO - Start polling
+2025-05-23 12:44:54,179 - aiogram.dispatcher - INFO - Run polling for bot @MyBudgetPalBot id=7770647171 - 'MyBudgetPalBot'
+2025-05-23 12:44:54,327 - root - INFO - Пользователь 710168190 пытается зарегистрироваться.
+2025-05-23 12:44:54,329 - root - ERROR - Ошибка при регистрации пользователя 710168190: threads can only be started once
+Traceback (most recent call last):
+  File "C:\Users\Alex\Documents\GitHub\MyBudgetPalBot\handlers\registration.py", line 26, in registration
+    async with await get_db_connection() as conn:
+               ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Alex\Documents\GitHub\MyBudgetPalBot\.venv\Lib\site-packages\aiosqlite\core.py", line 143, in __aenter__
+    return await self
+           ^^^^^^^^^^
+  File "C:\Users\Alex\Documents\GitHub\MyBudgetPalBot\.venv\Lib\site-packages\aiosqlite\core.py", line 139, in __await__
+    self.start()
+    ~~~~~~~~~~^^
+  File "C:\Users\Alex\AppData\Local\Programs\Python\Python313\Lib\threading.py", line 967, in start
+    raise RuntimeError("threads can only be started once")
+RuntimeError: threads can only be started once
+2025-05-23 12:44:54,732 - aiogram.event - INFO - Update id=856655274 is handled. Duration 406 ms by bot id=7770647171
+2025-05-23 12:47:00,450 - root - INFO - Подключение к базе данных: user.db
+2025-05-23 12:47:00,452 - root - INFO - База данных успешно инициализирована.
+2025-05-23 12:47:00,452 - root - INFO - Бот запущен. Начинаю опрос...
+2025-05-23 12:47:00,452 - aiogram.dispatcher - INFO - Start polling
+2025-05-23 12:47:00,945 - aiogram.dispatcher - INFO - Run polling for bot @MyBudgetPalBot id=7770647171 - 'MyBudgetPalBot'
+2025-05-23 12:47:19,278 - root - INFO - Пользователь 710168190 пытается зарегистрироваться.
+2025-05-23 12:47:19,280 - root - ERROR - Ошибка при регистрации пользователя 710168190: threads can only be started once
+Traceback (most recent call last):
+  File "C:\Users\Alex\Documents\GitHub\MyBudgetPalBot\handlers\registration.py", line 26, in registration
+    async with await get_db_connection() as conn:
+               ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Alex\Documents\GitHub\MyBudgetPalBot\.venv\Lib\site-packages\aiosqlite\core.py", line 143, in __aenter__
+    return await self
+           ^^^^^^^^^^
+  File "C:\Users\Alex\Documents\GitHub\MyBudgetPalBot\.venv\Lib\site-packages\aiosqlite\core.py", line 139, in __await__
+    self.start()
+    ~~~~~~~~~~^^
+  File "C:\Users\Alex\AppData\Local\Programs\Python\Python313\Lib\threading.py", line 967, in start
+    raise RuntimeError("threads can only be started once")
+RuntimeError: threads can only be started once
+2025-05-23 12:47:19,681 - aiogram.event - INFO - Update id=856655275 is handled. Duration 403 ms by bot id=7770647171
+2025-05-23 12:52:12,120 - root - INFO - Подключение к базе данных: user.db
+2025-05-23 12:52:12,123 - root - INFO - База данных успешно инициализирована.
+2025-05-23 12:52:12,123 - root - INFO - Бот запущен. Начинаю опрос...
+2025-05-23 12:52:12,123 - aiogram.dispatcher - INFO - Start polling
+2025-05-23 12:52:12,603 - aiogram.dispatcher - INFO - Run polling for bot @MyBudgetPalBot id=7770647171 - 'MyBudgetPalBot'
+2025-05-23 12:52:16,692 - root - INFO - Получена команда /start от пользователя 710168190
+2025-05-23 12:52:17,090 - aiogram.event - INFO - Update id=856655276 is handled. Duration 398 ms by bot id=7770647171
+2025-05-23 12:52:19,498 - root - INFO - Пользователь 710168190 запросил советы по экономии.
+2025-05-23 12:52:19,642 - root - INFO - Совет отправлен пользователю 710168190.
+2025-05-23 12:52:19,642 - aiogram.event - INFO - Update id=856655277 is handled. Duration 146 ms by bot id=7770647171
+2025-05-23 12:52:22,521 - root - INFO - Пользователь 710168190 пытается зарегистрироваться.
+2025-05-23 12:52:22,523 - root - ERROR - Ошибка при регистрации пользователя 710168190: threads can only be started once
+Traceback (most recent call last):
+  File "C:\Users\Alex\Documents\GitHub\MyBudgetPalBot\handlers\registration.py", line 26, in registration
+    async with await get_db_connection() as conn:
+               ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Alex\Documents\GitHub\MyBudgetPalBot\.venv\Lib\site-packages\aiosqlite\core.py", line 143, in __aenter__
+    return await self
+           ^^^^^^^^^^
+  File "C:\Users\Alex\Documents\GitHub\MyBudgetPalBot\.venv\Lib\site-packages\aiosqlite\core.py", line 139, in __await__
+    self.start()
+    ~~~~~~~~~~^^
+  File "C:\Users\Alex\AppData\Local\Programs\Python\Python313\Lib\threading.py", line 967, in start
+    raise RuntimeError("threads can only be started once")
+RuntimeError: threads can only be started once
+2025-05-23 12:52:22,666 - aiogram.event - INFO - Update id=856655278 is handled. Duration 145 ms by bot id=7770647171
+2025-05-23 12:56:14,452 - root - INFO - Инициализация базы данных: user.db
+2025-05-23 12:56:14,454 - root - INFO - База данных успешно инициализирована.
+2025-05-23 12:56:14,455 - root - INFO - Соединение для инициализации БД user.db закрыто.
+2025-05-23 12:56:14,455 - root - INFO - Бот запущен. Начинаю опрос...
+2025-05-23 12:56:14,455 - aiogram.dispatcher - INFO - Start polling
+2025-05-23 12:56:14,916 - aiogram.dispatcher - INFO - Run polling for bot @MyBudgetPalBot id=7770647171 - 'MyBudgetPalBot'
+2025-05-23 12:56:18,696 - root - INFO - Пользователь 710168190 запросил курс валют.
+2025-05-23 12:56:19,688 - root - INFO - Курсы валют успешно отправлены пользователю 710168190.
+2025-05-23 12:56:19,689 - aiogram.event - INFO - Update id=856655279 is handled. Duration 993 ms by bot id=7770647171
+2025-05-23 12:56:21,140 - root - INFO - Пользователь 710168190 начал ввод личных финансов.
+2025-05-23 12:56:21,282 - aiogram.event - INFO - Update id=856655280 is handled. Duration 145 ms by bot id=7770647171
+2025-05-23 12:56:22,659 - root - INFO - Пользователь 710168190 запросил советы по экономии.
+2025-05-23 12:56:22,812 - root - INFO - Совет отправлен пользователю 710168190.
+2025-05-23 12:56:22,813 - aiogram.event - INFO - Update id=856655281 is handled. Duration 156 ms by bot id=7770647171
+2025-05-23 12:56:25,312 - root - INFO - Пользователь 710168190 пытается зарегистрироваться.
+2025-05-23 12:56:25,314 - root - ERROR - Ошибка при регистрации пользователя 710168190: threads can only be started once
+Traceback (most recent call last):
+  File "C:\Users\Alex\Documents\GitHub\MyBudgetPalBot\handlers\registration.py", line 26, in registration
+    async with await get_db_connection() as conn:
+               ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Alex\Documents\GitHub\MyBudgetPalBot\.venv\Lib\site-packages\aiosqlite\core.py", line 143, in __aenter__
+    return await self
+           ^^^^^^^^^^
+  File "C:\Users\Alex\Documents\GitHub\MyBudgetPalBot\.venv\Lib\site-packages\aiosqlite\core.py", line 139, in __await__
+    self.start()
+    ~~~~~~~~~~^^
+  File "C:\Users\Alex\AppData\Local\Programs\Python\Python313\Lib\threading.py", line 967, in start
+    raise RuntimeError("threads can only be started once")
+RuntimeError: threads can only be started once
+2025-05-23 12:56:25,464 - aiogram.event - INFO - Update id=856655282 is handled. Duration 153 ms by bot id=7770647171
+2025-05-23 12:58:34,027 - root - INFO - Инициализация базы данных: user.db
+2025-05-23 12:58:34,030 - root - INFO - База данных успешно инициализирована.
+2025-05-23 12:58:34,030 - root - INFO - Соединение для инициализации БД user.db закрыто.
+2025-05-23 12:58:34,030 - root - INFO - Бот запущен. Начинаю опрос...
+2025-05-23 12:58:34,031 - aiogram.dispatcher - INFO - Start polling
+2025-05-23 12:58:34,428 - aiogram.dispatcher - INFO - Run polling for bot @MyBudgetPalBot id=7770647171 - 'MyBudgetPalBot'
+2025-05-23 12:58:34,552 - aiogram.dispatcher - ERROR - Failed to fetch updates - TelegramConflictError: Telegram server says - Conflict: terminated by other getUpdates request; make sure that only one bot instance is running
+2025-05-23 12:58:34,552 - aiogram.dispatcher - WARNING - Sleep for 1.000000 seconds and try again... (tryings = 0, bot id = 7770647171)
+2025-05-23 12:58:38,698 - aiogram.dispatcher - ERROR - Failed to fetch updates - TelegramConflictError: Telegram server says - Conflict: terminated by other getUpdates request; make sure that only one bot instance is running
+2025-05-23 12:58:38,699 - aiogram.dispatcher - WARNING - Sleep for 1.000000 seconds and try again... (tryings = 0, bot id = 7770647171)
+2025-05-23 12:58:39,836 - aiogram.dispatcher - ERROR - Failed to fetch updates - TelegramConflictError: Telegram server says - Conflict: terminated by other getUpdates request; make sure that only one bot instance is running
+2025-05-23 12:58:39,837 - aiogram.dispatcher - WARNING - Sleep for 1.081232 seconds and try again... (tryings = 1, bot id = 7770647171)
+2025-05-23 12:58:44,063 - aiogram.dispatcher - ERROR - Failed to fetch updates - TelegramConflictError: Telegram server says - Conflict: terminated by other getUpdates request; make sure that only one bot instance is running
+2025-05-23 12:58:44,064 - aiogram.dispatcher - WARNING - Sleep for 1.360658 seconds and try again... (tryings = 1, bot id = 7770647171)
+2025-05-23 12:58:45,581 - aiogram.dispatcher - ERROR - Failed to fetch updates - TelegramConflictError: Telegram server says - Conflict: terminated by other getUpdates request; make sure that only one bot instance is running
+2025-05-23 12:58:45,582 - aiogram.dispatcher - WARNING - Sleep for 1.340493 seconds and try again... (tryings = 2, bot id = 7770647171)
+2025-05-23 12:58:50,062 - aiogram.dispatcher - ERROR - Failed to fetch updates - TelegramConflictError: Telegram server says - Conflict: terminated by other getUpdates request; make sure that only one bot instance is running
+2025-05-23 12:58:50,063 - aiogram.dispatcher - WARNING - Sleep for 1.686724 seconds and try again... (tryings = 2, bot id = 7770647171)
+2025-05-23 12:59:01,890 - aiogram.dispatcher - INFO - Connection established (tryings = 3, bot id = 7770647171)
+2025-05-23 12:59:30,307 - root - INFO - Пользователь 710168190 пытается зарегистрироваться.
+2025-05-23 12:59:30,309 - root - ERROR - Ошибка при регистрации пользователя 710168190: threads can only be started once
+Traceback (most recent call last):
+  File "c:\Users\Alex\Documents\GitHub\MyBudgetPalBot\handlers\registration.py", line 26, in registration
+    async with await get_db_connection() as conn:
+               ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Alex\Documents\GitHub\MyBudgetPalBot\.venv\Lib\site-packages\aiosqlite\core.py", line 143, in __aenter__
+    return await self
+           ^^^^^^^^^^
+  File "C:\Users\Alex\Documents\GitHub\MyBudgetPalBot\.venv\Lib\site-packages\aiosqlite\core.py", line 139, in __await__
+    self.start()
+    ~~~~~~~~~~^^
+  File "C:\Users\Alex\AppData\Local\Programs\Python\Python313\Lib\threading.py", line 967, in start
+    raise RuntimeError("threads can only be started once")
+RuntimeError: threads can only be started once
+2025-05-23 12:59:30,747 - aiogram.event - INFO - Update id=856655283 is handled. Duration 441 ms by bot id=7770647171
+2025-05-23 13:00:25,940 - root - INFO - Инициализация базы данных: user.db
+2025-05-23 13:00:25,942 - root - INFO - База данных успешно инициализирована.
+2025-05-23 13:00:25,942 - root - INFO - Соединение для инициализации БД user.db закрыто.
+2025-05-23 13:00:25,942 - root - INFO - Бот запущен. Начинаю опрос...
+2025-05-23 13:00:25,942 - aiogram.dispatcher - INFO - Start polling
+2025-05-23 13:00:26,318 - aiogram.dispatcher - INFO - Run polling for bot @MyBudgetPalBot id=7770647171 - 'MyBudgetPalBot'
+2025-05-23 13:00:34,968 - root - INFO - Пользователь 710168190 пытается зарегистрироваться.
+2025-05-23 13:00:34,970 - root - ERROR - Ошибка при регистрации пользователя 710168190: threads can only be started once
+Traceback (most recent call last):
+  File "C:\Users\Alex\Documents\GitHub\MyBudgetPalBot\handlers\registration.py", line 26, in registration
+    async with await get_db_connection() as conn:
+               ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Alex\Documents\GitHub\MyBudgetPalBot\.venv\Lib\site-packages\aiosqlite\core.py", line 143, in __aenter__
+    return await self
+           ^^^^^^^^^^
+  File "C:\Users\Alex\Documents\GitHub\MyBudgetPalBot\.venv\Lib\site-packages\aiosqlite\core.py", line 139, in __await__
+    self.start()
+    ~~~~~~~~~~^^
+  File "C:\Users\Alex\AppData\Local\Programs\Python\Python313\Lib\threading.py", line 967, in start
+    raise RuntimeError("threads can only be started once")
+RuntimeError: threads can only be started once
+2025-05-23 13:00:35,369 - aiogram.event - INFO - Update id=856655284 is handled. Duration 401 ms by bot id=7770647171
+2025-05-23 13:02:21,114 - root - INFO - Инициализация базы данных: user.db
+2025-05-23 13:02:21,116 - root - INFO - База данных успешно инициализирована.
+2025-05-23 13:02:21,116 - root - INFO - Бот запущен. Начинаю опрос...
+2025-05-23 13:02:21,117 - aiogram.dispatcher - INFO - Start polling
+2025-05-23 13:02:21,581 - aiogram.dispatcher - INFO - Run polling for bot @MyBudgetPalBot id=7770647171 - 'MyBudgetPalBot'
+2025-05-23 13:02:21,706 - aiogram.dispatcher - ERROR - Failed to fetch updates - TelegramConflictError: Telegram server says - Conflict: terminated by other getUpdates request; make sure that only one bot instance is running
+2025-05-23 13:02:21,707 - aiogram.dispatcher - WARNING - Sleep for 1.000000 seconds and try again... (tryings = 0, bot id = 7770647171)
+2025-05-23 13:02:25,846 - aiogram.dispatcher - ERROR - Failed to fetch updates - TelegramConflictError: Telegram server says - Conflict: terminated by other getUpdates request; make sure that only one bot instance is running
+2025-05-23 13:02:25,846 - aiogram.dispatcher - WARNING - Sleep for 1.000000 seconds and try again... (tryings = 0, bot id = 7770647171)
+2025-05-23 13:02:26,981 - aiogram.dispatcher - ERROR - Failed to fetch updates - TelegramConflictError: Telegram server says - Conflict: terminated by other getUpdates request; make sure that only one bot instance is running
+2025-05-23 13:02:26,981 - aiogram.dispatcher - WARNING - Sleep for 1.231398 seconds and try again... (tryings = 1, bot id = 7770647171)
+2025-05-23 13:02:36,981 - aiogram.dispatcher - INFO - Connection established (tryings = 1, bot id = 7770647171)
+2025-05-23 13:02:59,662 - root - INFO - Пользователь 710168190 пытается зарегистрироваться.
+2025-05-23 13:03:00,082 - root - INFO - Пользователь 710168190 (Aleksei) успешно зарегистрирован.
+2025-05-23 13:03:00,083 - aiogram.event - INFO - Update id=856655285 is handled. Duration 422 ms by bot id=7770647171
+2025-05-23 13:03:02,835 - root - INFO - Пользователь 710168190 запросил курс валют.
+2025-05-23 13:03:03,528 - root - INFO - Курсы валют успешно отправлены пользователю 710168190.
+2025-05-23 13:03:03,530 - aiogram.event - INFO - Update id=856655286 is handled. Duration 696 ms by bot id=7770647171
+2025-05-23 13:03:04,686 - root - INFO - Пользователь 710168190 запросил советы по экономии.
+2025-05-23 13:03:04,841 - root - INFO - Совет отправлен пользователю 710168190.
+2025-05-23 13:03:04,856 - aiogram.event - INFO - Update id=856655287 is handled. Duration 173 ms by bot id=7770647171
+2025-05-23 13:03:06,085 - root - INFO - Пользователь 710168190 начал ввод личных финансов.
+2025-05-23 13:03:06,252 - aiogram.event - INFO - Update id=856655288 is handled. Duration 170 ms by bot id=7770647171
+2025-05-23 13:13:58,337 - root - INFO - Инициализация базы данных: user.db
+2025-05-23 13:13:58,340 - root - INFO - База данных успешно инициализирована.
+2025-05-23 13:13:58,341 - root - INFO - Бот запущен. Начинаю опрос...
+2025-05-23 13:13:58,341 - aiogram.dispatcher - INFO - Start polling
+2025-05-23 13:13:58,817 - aiogram.dispatcher - INFO - Run polling for bot @MyBudgetPalBot id=7770647171 - 'MyBudgetPalBot'
+2025-05-23 13:14:15,893 - root - INFO - Получена команда /start от пользователя 710168190
+2025-05-23 13:14:16,312 - aiogram.event - INFO - Update id=856655289 is handled. Duration 419 ms by bot id=7770647171
+2025-05-23 13:14:18,470 - root - INFO - Пользователь 710168190 пытается зарегистрироваться.
+2025-05-23 13:14:18,620 - root - INFO - Пользователь 710168190 уже зарегистрирован.
+2025-05-23 13:14:18,621 - aiogram.event - INFO - Update id=856655290 is handled. Duration 151 ms by bot id=7770647171
+2025-05-23 13:14:20,766 - root - INFO - Пользователь 710168190 запросил курс валют.
+2025-05-23 13:14:21,456 - root - INFO - Курсы валют успешно отправлены пользователю 710168190.
+2025-05-23 13:14:21,457 - aiogram.event - INFO - Update id=856655291 is handled. Duration 691 ms by bot id=7770647171
+2025-05-23 13:14:23,162 - root - INFO - Пользователь 710168190 запросил советы по экономии.
+2025-05-23 13:14:23,305 - root - INFO - Совет отправлен пользователю 710168190.
+2025-05-23 13:14:23,306 - aiogram.event - INFO - Update id=856655292 is handled. Duration 145 ms by bot id=7770647171
+2025-05-23 13:14:25,086 - root - INFO - Пользователь 710168190 начал ввод личных финансов.
+2025-05-23 13:14:25,235 - aiogram.event - INFO - Update id=856655293 is handled. Duration 152 ms by bot id=7770647171
+2025-05-23 13:14:33,483 - root - INFO - Пользователь 710168190 ввел категорию 1: Продукты
+2025-05-23 13:14:33,624 - aiogram.event - INFO - Update id=856655294 is handled. Duration 144 ms by bot id=7770647171
+2025-05-23 13:14:43,061 - root - INFO - Пользователь 710168190 ввел расходы 1: 450
+2025-05-23 13:14:43,207 - aiogram.event - INFO - Update id=856655295 is handled. Duration 154 ms by bot id=7770647171
+2025-05-23 13:14:57,109 - root - INFO - Пользователь 710168190 ввел категорию 2: Молоко
+2025-05-23 13:14:57,526 - aiogram.event - INFO - Update id=856655296 is handled. Duration 420 ms by bot id=7770647171
+2025-05-23 13:15:09,650 - root - INFO - Пользователь 710168190 ввел расходы 2: 150
+2025-05-23 13:15:09,798 - aiogram.event - INFO - Update id=856655297 is handled. Duration 152 ms by bot id=7770647171
+2025-05-23 13:15:13,311 - root - INFO - Пользователь 710168190 отменил диалог. Состояние: FinancesForm:category3
+2025-05-23 13:15:13,456 - aiogram.event - INFO - Update id=856655298 is handled. Duration 147 ms by bot id=7770647171
+2025-05-23 13:17:52,004 - aiogram.dispatcher - INFO - Polling stopped
+2025-05-23 13:17:52,258 - aiogram.dispatcher - INFO - Polling stopped for bot @MyBudgetPalBot id=7770647171 - 'MyBudgetPalBot'
+2025-05-23 13:17:52,261 - root - INFO - Бот остановлен вручную.
