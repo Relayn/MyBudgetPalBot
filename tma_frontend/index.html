@@ -1,0 +1,361 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Учет Расходов</title>
+    <style>
+        :root {
+            --tg-theme-bg-color: #ffffff;
+            --tg-theme-text-color: #000000;
+            --tg-theme-button-color: #007aff;
+            --tg-theme-button-text-color: #ffffff;
+            --tg-theme-hint-color: #999999;
+            --tg-theme-secondary-bg-color: #f0f0f0;
+        }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            padding: 16px;
+            margin: 0;
+            color: var(--tg-theme-text-color);
+            background-color: var(--tg-theme-bg-color);
+            box-sizing: border-box;
+        }
+        h1, h2 { margin-top: 0; }
+        .form-group { margin-bottom: 15px; }
+        label { display: block; margin-bottom: 5px; font-size: 14px; }
+        input, select {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid var(--tg-theme-hint-color);
+            border-radius: 8px;
+            box-sizing: border-box;
+            font-size: 16px;
+            background-color: var(--tg-theme-bg-color);
+            color: var(--tg-theme-text-color);
+        }
+        .category-group { display: flex; align-items: center; gap: 10px; }
+        #add-category-btn {
+            padding: 8px 12px;
+            font-size: 20px;
+            line-height: 1;
+            border-radius: 8px;
+            border: 1px solid var(--tg-theme-hint-color);
+            background-color: transparent;
+            color: var(--tg-theme-text-color);
+            cursor: pointer;
+        }
+        #add-category-form { display: none; margin-top: 10px; }
+        .form-buttons { display: flex; gap: 10px; margin-top: 10px; }
+        .submit-btn {
+            flex-grow: 1;
+            padding: 12px;
+            border: none;
+            border-radius: 8px;
+            background-color: var(--tg-theme-button-color);
+            color: var(--tg-theme-button-text-color);
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+        .submit-btn:disabled { opacity: 0.7; cursor: not-allowed; }
+        #cancel-edit-btn, #cancel-add-category-btn {
+            background-color: var(--tg-theme-secondary-bg-color);
+            color: var(--tg-theme-text-color);
+        }
+        hr { border: none; border-top: 1px solid var(--tg-theme-secondary-bg-color); margin: 20px 0; }
+        .expense-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px;
+            border-radius: 8px;
+            background-color: var(--tg-theme-secondary-bg-color);
+            margin-bottom: 8px;
+        }
+        .expense-item .info { flex-grow: 1; display: flex; align-items: center; }
+        .expense-item .category { font-weight: 500; }
+        .expense-item .details { text-align: right; }
+        .expense-item .amount { font-weight: bold; display: block; }
+        .expense-item .date { font-size: 12px; color: var(--tg-theme-hint-color); }
+        .action-buttons button { background: none; border: none; font-size: 20px; line-height: 1; cursor: pointer; padding: 5px; color: var(--tg-theme-hint-color); }
+        .delete-btn { font-size: 24px !important; }
+        #loading-message, #empty-message { text-align: center; color: var(--tg-theme-hint-color); padding: 20px; }
+    </style>
+</head>
+<body>
+    <h1 id="form-title">Новый расход</h1>
+
+    <form id="expense-form">
+        <div class="form-group">
+            <label for="category-select">Категория</label>
+            <div class="category-group">
+                <select id="category-select" required></select>
+                <button type="button" id="add-category-btn">+</button>
+            </div>
+            <div id="add-category-form">
+                <input type="text" id="new-category-name" placeholder="Название новой категории">
+                <div class="form-buttons">
+                    <button type="button" id="save-new-category-btn" class="submit-btn">Сохранить</button>
+                    <button type="button" id="cancel-add-category-btn" class="submit-btn">Отмена</button>
+                </div>
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="amount-input">Сумма</label>
+            <input type="number" id="amount-input" placeholder="0.00" step="0.01" required>
+        </div>
+        <div class="form-group">
+            <label for="date-input">Дата</label>
+            <input type="date" id="date-input" required>
+        </div>
+        <div class="form-buttons">
+            <button type="submit" class="submit-btn" id="submit-button">Сохранить</button>
+            <button type="button" class="submit-btn" id="cancel-edit-btn" style="display: none;">Отмена</button>
+        </div>
+    </form>
+
+    <hr>
+
+    <div id="expenses-list-container">
+        <h2>Последние расходы</h2>
+        <p id="loading-message">Загрузка...</p>
+    </div>
+
+    <script src="https://telegram.org/js/telegram-web-app.js"></script>
+    <script>
+        const tg = window.Telegram.WebApp;
+        tg.ready();
+
+        // --- DOM элементы ---
+        const form = document.getElementById('expense-form');
+        const submitButton = document.getElementById('submit-button');
+        const cancelEditButton = document.getElementById('cancel-edit-btn');
+        const dateInput = document.getElementById('date-input');
+        const categorySelect = document.getElementById('category-select');
+        const amountInput = document.getElementById('amount-input');
+        const expensesContainer = document.getElementById('expenses-list-container');
+        const loadingMessage = document.getElementById('loading-message');
+        const formTitle = document.getElementById('form-title');
+        const addCategoryBtn = document.getElementById('add-category-btn');
+        const addCategoryForm = document.getElementById('add-category-form');
+        const newCategoryNameInput = document.getElementById('new-category-name');
+        const saveNewCategoryBtn = document.getElementById('save-new-category-btn');
+        const cancelAddCategoryBtn = document.getElementById('cancel-add-category-btn');
+
+        // --- Состояние приложения ---
+        let currentlyEditingId = null;
+        let expensesCache = {};
+
+        // --- Функции ---
+        const escapeHtml = (unsafe) => unsafe.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;").replace(/'/g, "&#039;");
+
+        const resetFormToCreateMode = () => {
+            form.reset();
+            dateInput.value = new Date().toISOString().split('T')[0];
+            currentlyEditingId = null;
+            formTitle.textContent = 'Новый расход';
+            submitButton.textContent = 'Сохранить';
+            cancelEditButton.style.display = 'none';
+        };
+
+        const renderExpenseItem = (expense) => {
+            const formattedDate = new Date(expense.expense_date).toLocaleDateString('ru-RU');
+            return `
+                <div class="info"><span class="category">${escapeHtml(expense.category.name)}</span></div>
+                <div class="details">
+                    <span class="amount">${expense.amount.toFixed(2)}</span>
+                    <span class="date">${formattedDate}</span>
+                </div>
+                <div class="action-buttons">
+                    <button class="edit-btn" data-id="${expense.id}">&#9998;</button>
+                    <button class="delete-btn" data-id="${expense.id}">&times;</button>
+                </div>`;
+        };
+
+        const fetchAndRenderCategories = async (selectCategoryId = null) => {
+            try {
+                const response = await fetch('/api/categories', { headers: { 'X-Init-Data': tg.initData } });
+                if (!response.ok) throw new Error('Не удалось загрузить категории.');
+                const categories = await response.json();
+
+                categorySelect.innerHTML = '<option value="">-- Выберите категорию --</option>';
+                categories.forEach(cat => {
+                    const option = document.createElement('option');
+                    option.value = cat.id;
+                    option.textContent = escapeHtml(cat.name);
+                    categorySelect.appendChild(option);
+                });
+
+                if (selectCategoryId) {
+                    categorySelect.value = selectCategoryId;
+                }
+            } catch (error) {
+                tg.showAlert(error.message);
+            }
+        };
+
+        const fetchAndRenderExpenses = async () => {
+            loadingMessage.style.display = 'block';
+            expensesContainer.querySelectorAll('.expense-item, #empty-message').forEach(el => el.remove());
+
+            try {
+                const response = await fetch('/api/expenses', { method: 'GET', headers: { 'X-Init-Data': tg.initData } });
+                if (!response.ok) throw new Error('Не удалось загрузить расходы.');
+                const expenses = await response.json();
+
+                expensesCache = {};
+                expenses.forEach(e => { expensesCache[e.id] = e; });
+
+                if (expenses.length === 0) {
+                    expensesContainer.insertAdjacentHTML('beforeend', '<p id="empty-message">У вас пока нет расходов.</p>');
+                } else {
+                    expenses.forEach(expense => {
+                        const el = document.createElement('div');
+                        el.className = 'expense-item';
+                        el.dataset.id = expense.id;
+                        el.innerHTML = renderExpenseItem(expense);
+                        expensesContainer.appendChild(el);
+                    });
+                }
+            } catch (error) {
+                tg.showAlert(error.message);
+            } finally {
+                loadingMessage.style.display = 'none';
+            }
+        };
+
+        // --- Обработчики событий ---
+        form.addEventListener('submit', async (event) => {
+            event.preventDefault();
+            if (!categorySelect.value) {
+                tg.showAlert('Пожалуйста, выберите категорию.');
+                return;
+            }
+            submitButton.disabled = true;
+
+            const expenseData = {
+                category_id: parseInt(categorySelect.value),
+                amount: parseFloat(amountInput.value),
+                expense_date: dateInput.value,
+            };
+
+            const isEditing = currentlyEditingId !== null;
+            const url = isEditing ? `/api/expenses/${currentlyEditingId}` : '/api/expenses';
+            const method = isEditing ? 'PUT' : 'POST';
+
+            try {
+                const response = await fetch(url, {
+                    method: method,
+                    headers: { 'Content-Type': 'application/json', 'X-Init-Data': tg.initData },
+                    body: JSON.stringify(expenseData),
+                });
+
+                if (response.ok) {
+                    if (isEditing) {
+                        const updatedExpense = await response.json();
+                        expensesCache[updatedExpense.id] = updatedExpense;
+                        const itemInDom = expensesContainer.querySelector(`.expense-item[data-id="${updatedExpense.id}"]`);
+                        if (itemInDom) itemInDom.innerHTML = renderExpenseItem(updatedExpense);
+                        tg.showPopup({ title: 'Успех!', message: 'Расход обновлен.', buttons: [{ type: 'ok' }] });
+                    } else {
+                        tg.showPopup({ title: 'Успех!', message: 'Расход сохранен.', buttons: [{ type: 'ok' }] });
+                        await fetchAndRenderExpenses();
+                    }
+                    resetFormToCreateMode();
+                } else {
+                    const errorData = await response.json();
+                    tg.showAlert(`Ошибка: ${errorData.detail || 'Не удалось сохранить данные.'}`);
+                }
+            } catch (error) {
+                tg.showAlert(`Сетевая ошибка: ${error.message}`);
+            } finally {
+                submitButton.disabled = false;
+            }
+        });
+
+        expensesContainer.addEventListener('click', async (event) => {
+            const button = event.target.closest('button');
+            if (!button) return;
+            const expenseId = button.dataset.id;
+
+            if (button.classList.contains('edit-btn')) {
+                const expenseToEdit = expensesCache[expenseId];
+                if (expenseToEdit) {
+                    categorySelect.value = expenseToEdit.category.id;
+                    amountInput.value = expenseToEdit.amount;
+                    dateInput.value = expenseToEdit.expense_date;
+                    currentlyEditingId = expenseId;
+                    formTitle.textContent = 'Редактировать расход';
+                    submitButton.textContent = 'Обновить';
+                    cancelEditButton.style.display = 'block';
+                    window.scrollTo(0, 0);
+                }
+            }
+
+            if (button.classList.contains('delete-btn')) {
+                tg.showConfirm('Вы уверены, что хотите удалить этот расход?', async (confirmed) => {
+                    if (confirmed) {
+                        try {
+                            const response = await fetch(`/api/expenses/${expenseId}`, { method: 'DELETE', headers: { 'X-Init-Data': tg.initData } });
+                            if (response.ok) {
+                                button.closest('.expense-item').remove();
+                                delete expensesCache[expenseId];
+                                if (Object.keys(expensesCache).length === 0) {
+                                    expensesContainer.insertAdjacentHTML('beforeend', '<p id="empty-message">У вас пока нет расходов.</p>');
+                                }
+                            } else {
+                                const errorData = await response.json();
+                                tg.showAlert(`Ошибка удаления: ${errorData.detail || 'Не удалось удалить расход.'}`);
+                            }
+                        } catch (error) {
+                            tg.showAlert(`Сетевая ошибка: ${error.message}`);
+                        }
+                    }
+                });
+            }
+        });
+
+        addCategoryBtn.addEventListener('click', () => { addCategoryForm.style.display = 'block'; });
+        cancelAddCategoryBtn.addEventListener('click', () => { addCategoryForm.style.display = 'none'; });
+        cancelEditButton.addEventListener('click', resetFormToCreateMode);
+
+        saveNewCategoryBtn.addEventListener('click', async () => {
+            const name = newCategoryNameInput.value.trim();
+            if (!name) {
+                tg.showAlert('Название категории не может быть пустым.');
+                return;
+            }
+            saveNewCategoryBtn.disabled = true;
+            try {
+                const response = await fetch('/api/categories', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json', 'X-Init-Data': tg.initData },
+                    body: JSON.stringify({ name: name }),
+                });
+                if (response.ok) {
+                    const newCategory = await response.json();
+                    await fetchAndRenderCategories(newCategory.id);
+                    addCategoryForm.style.display = 'none';
+                    newCategoryNameInput.value = '';
+                } else {
+                    const errorData = await response.json();
+                    tg.showAlert(`Ошибка: ${errorData.detail || 'Не удалось создать категорию.'}`);
+                }
+            } catch (error) {
+                tg.showAlert(`Сетевая ошибка: ${error.message}`);
+            } finally {
+                saveNewCategoryBtn.disabled = false;
+            }
+        });
+
+        // --- Инициализация ---
+        const initializeApp = async () => {
+            resetFormToCreateMode();
+            await fetchAndRenderCategories();
+            await fetchAndRenderExpenses();
+        };
+        initializeApp();
+    </script>
+</body>
+</html>

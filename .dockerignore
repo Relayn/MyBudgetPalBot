@@ -1,0 +1,32 @@
+# .dockerignore
+
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.Python
+.venv
+env/
+venv/
+
+# IDE
+.idea/
+.vscode/
+
+# Tests
+tests/
+.pytest_cache/
+.coverage
+
+# Git
+.git/
+.gitignore
+.gitattributes
+
+# Docker
+Dockerfile
+.dockerignore
+
+# Local files
+test.db
+budget.db

@@ -1,6 +1,0 @@
-aiogram
-aiohttp
-python-dotenv
-aiosqlite
-pytest    # Для запуска тестов
-pytest-asyncio # Для тестирования асинхронного кода с pytest
