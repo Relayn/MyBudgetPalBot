@@ -119,4 +119,4 @@ def test_parse_init_data_is_robust(init_data_str: str) -> None:
         # Свойство: результат всегда либо None, либо словарь
         assert result is None or isinstance(result, dict)
     except Exception as e:
-        pytest.fail(f"parse_init_data failed on input: {init_data_str!r} with {e}")
+        pytest.fail(f"parse_init_data failed on input: {repr(init_data_str)} with {e}")
