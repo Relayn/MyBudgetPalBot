@@ -20,8 +20,8 @@ jobs:
           python-version: '3.11'
 
       # 3. Устанавливаем Poetry
-      - name: Set up Poetry
-        uses: actions/setup-poetry@v2
+      - name: Install Poetry
+        uses: snok/install-poetry@v1
 
       # 4. Кэшируем зависимости для ускорения сборки
       - name: Cache dependencies
