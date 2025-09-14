@@ -68,7 +68,8 @@ def test_validate_init_data_success() -> None:
         digestmod=hashlib.sha256,
     ).hexdigest()
 
-    init_data_str = f"{data_check_string.replace('\n', '&')}&hash={correct_hash}"
+    data_params = data_check_string.replace("\n", "&")
+    init_data_str = f"{data_params}&hash={correct_hash}"
 
     assert validate_init_data(init_data_str, bot_token) is True
 
