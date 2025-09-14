@@ -3,6 +3,9 @@ from typing import Any, Dict
 
 import pytest
 from httpx import AsyncClient
+from hypothesis import HealthCheck, given, settings
+from hypothesis import strategies as st
+from hypothesis.strategies import SearchStrategy
 from pytest import approx
 
 from budget_bot.main import app
@@ -254,19 +257,88 @@ async def test_create_expense_with_foreign_category(
     assert response.status_code == 404
 
 
-async def test_create_expense_with_non_existent_category(
-    client: AsyncClient, user_a_data: Dict[str, Any]
-) -> None:
-    """Тест: попытка создать расход с несуществующей категорией."""
-    app.dependency_overrides[get_validated_user_data] = lambda: user_a_data
-    # Сначала создаем пользователя в БД, чтобы он точно существовал
-    await client.post("/api/categories", json={"name": "Setup Category"})
+# Стратегия для генерации валидных данных пользователя
+user_data_strategy: SearchStrategy[Dict[str, Any]] = st.builds(
+    dict,
+    id=st.integers(min_value=1, max_value=1_000_000_000),
+    first_name=st.text(min_size=1, max_size=50),
+)
 
+
+@settings(suppress_health_check=[HealthCheck.function_scoped_fixture], deadline=1000)
+@given(
+    user_data=user_data_strategy,
+    amount=st.floats(
+        min_value=0.01, max_value=1_000_000, allow_nan=False, allow_infinity=False
+    ),
+    expense_date=st.dates(min_value=date(2020, 1, 1), max_value=date(2030, 12, 31)),
+)
+async def test_create_expense_with_any_valid_data(
+    client: AsyncClient,
+    user_data: Dict[str, Any],
+    amount: float,
+    expense_date: date,
+) -> None:
+    """
+    Тест (Hypothesis): эндпоинт создания расхода успешно обрабатывает
+    любые валидные данные (сумма, дата) для любого пользователя.
+    """
+    app.dependency_overrides[get_validated_user_data] = lambda: user_data
+
+    # Шаг 1: Создаем категорию для этого пользователя, чтобы получить валидный ID
+    cat_resp = await client.post("/api/categories", json={"name": "Generated Category"})
+    assert cat_resp.status_code == 201
+    category_id = cat_resp.json()["id"]
+
+    # Шаг 2: Создаем расход с использованием этого ID и сгенерированных данных
     expense_data = {
-        "category_id": 999,  # Заведомо несуществующий ID категории
-        "amount": 100,
+        "category_id": category_id,
+        "amount": amount,
+        "expense_date": expense_date.isoformat(),
+    }
+    exp_resp = await client.post("/api/expenses", json=expense_data)
+
+    # Шаг 3: Проверяем, что расход успешно создан
+    assert exp_resp.status_code == 201
+    assert exp_resp.json() == {"message": "Expense added successfully"}
+
+
+@settings(suppress_health_check=[HealthCheck.function_scoped_fixture])
+@given(
+    user_data=user_data_strategy,
+    # Генерируем либо невалидную сумму, либо заведомо несуществующий ID
+    amount=st.floats(max_value=0, allow_nan=False, allow_infinity=False),
+    non_existent_category_id=st.integers(min_value=9999, max_value=100000),
+)
+async def test_create_expense_with_invalid_data(
+    client: AsyncClient,
+    user_data: Dict[str, Any],
+    amount: float,
+    non_existent_category_id: int,
+) -> None:
+    """
+    Тест (Hypothesis): эндпоинт создания расхода возвращает ошибки
+    на невалидные данные (сумма <= 0 или несуществующая категория).
+    """
+    app.dependency_overrides[get_validated_user_data] = lambda: user_data
+    # Сначала создаем пользователя в БД, чтобы он точно существовал
+    cat_resp = await client.post("/api/categories", json={"name": "Setup Category"})
+    valid_category_id = cat_resp.json()["id"]
+
+    # Сценарий 1: Невалидная сумма
+    expense_data_invalid_amount = {
+        "category_id": valid_category_id,
+        "amount": amount,
         "expense_date": date.today().isoformat(),
     }
-    response = await client.post("/api/expenses", json=expense_data)
-    # Ожидаем ошибку, так как verify_category_owner не найдет категорию
-    assert response.status_code == 404
+    response1 = await client.post("/api/expenses", json=expense_data_invalid_amount)
+    assert response1.status_code == 422
+
+    # Сценарий 2: Несуществующая категория
+    expense_data_invalid_category = {
+        "category_id": non_existent_category_id,
+        "amount": 100.0,
+        "expense_date": date.today().isoformat(),
+    }
+    response2 = await client.post("/api/expenses", json=expense_data_invalid_category)
+    assert response2.status_code == 404

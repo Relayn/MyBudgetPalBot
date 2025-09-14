@@ -28,6 +28,7 @@ pre-commit = "^4.3.0"
 pytest-cov = "^6.2.1"
 httpx = "^0.28.1"
 pip-audit = "^2.9.0"
+hypothesis = "^6.138.4"
 
 [build-system]
 requires = ["poetry-core"]

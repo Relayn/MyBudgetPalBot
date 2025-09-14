@@ -1,0 +1,57 @@
+name: CI Pipeline
+
+# Запускать на каждый push и pull request в любую ветку
+on: [push, pull_request]
+
+jobs:
+  build-and-test:
+    # Использовать последнюю версию Ubuntu
+    runs-on: ubuntu-latest
+
+    steps:
+      # 1. Получаем код из репозитория
+      - name: Check out repository code
+        uses: actions/checkout@v4
+
+      # 2. Устанавливаем Python нужной версии
+      - name: Set up Python 3.11
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      # 3. Устанавливаем Poetry
+      - name: Set up Poetry
+        uses: actions/setup-poetry@v2
+
+      # 4. Кэшируем зависимости для ускорения сборки
+      - name: Cache dependencies
+        id: cache-poetry
+        uses: actions/cache@v4
+        with:
+          path: ./.venv
+          key: ${{ runner.os }}-poetry-${{ hashFiles('**/poetry.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-poetry-
+
+      # 5. Устанавливаем зависимости, если кэш не найден
+      - name: Install dependencies
+        run: poetry install
+        if: steps.cache-poetry.outputs.cache-hit != 'true'
+
+      # 6. Запускаем линтеры и проверку форматирования
+      - name: Run Linters and Formatters
+        run: |
+          poetry run ruff check .
+          poetry run ruff format --check .
+
+      # 7. Запускаем проверку типов
+      - name: Run Type Checking
+        run: poetry run mypy .
+
+      # 8. Запускаем сканер безопасности
+      - name: Run Security Scan
+        run: poetry run bandit -r src/
+
+      # 9. Запускаем тесты
+      - name: Run Tests
+        run: poetry run pytest

@@ -4,6 +4,8 @@ import json
 from urllib.parse import quote
 
 import pytest
+from hypothesis import given
+from hypothesis import strategies as st
 
 from budget_bot.utils.security import parse_init_data, validate_init_data
 
@@ -104,3 +106,17 @@ def test_validate_init_data_tampered() -> None:
     )
 
     assert validate_init_data(tampered_init_data_str, bot_token) is False
+
+
+@given(init_data_str=st.text())
+def test_parse_init_data_is_robust(init_data_str: str) -> None:
+    """
+    Тест на прочность: parse_init_data не должна падать с ошибкой
+    на любых текстовых входных данных.
+    """
+    try:
+        result = parse_init_data(init_data_str)
+        # Свойство: результат всегда либо None, либо словарь
+        assert result is None or isinstance(result, dict)
+    except Exception as e:
+        pytest.fail(f"parse_init_data failed on input: {init_data_str!r} with {e}")
